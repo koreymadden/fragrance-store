@@ -1,33 +1,100 @@
-.App {
-  text-align: center;
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+::-webkit-scrollbar-thumb {
+    background-color: #000000;
 }
-
-.App-link {
-  color: #61dafb;
+.active {
+    color: #d32f2f ;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.item-image {
+    max-height: 300px;
+    width: inherit !important;
+    display: initial !important;
+}
+.card-btn {
+    margin-right: 15px;
+}
+.valign-wrapper {
+    display: flex !important;
+}
+.no-margin {
+    margin: 0 !important;
+}
+.item-name {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.low-stock {
+    background-color: #ffd600 !important;
+}
+.good-stock {
+    background-color: #1b5e20 !important;
+}
+span .badge {
+    min-width: initial !important;
+}
+.more-link {
+    margin-left: 15px;
+}
+.button-a {
+    background:none!important;
+    color:inherit;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    cursor: pointer;
+    font-size: 1rem;
+}
+#signup-box {
+    max-width: 500px;
+    margin-top: 50px;
+}
+#login-box {
+    margin-top: 50px;
+    max-width: 500px;
+}
+.width-100 {
+    width: 100% !important;
+}
+#login-btn, #logout-btn {
+    margin-bottom: 20px;
+}
+.full-bg {
+    height: 400px;
+    width: 100%;
+    background: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/fragrances-1520421596.jpg");
+    background-size: cover;
+    position: relative;
+}
+.layer {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.home-bg-divider {
+    height: 5px;
+}
+.testimonial-btn {
+    pointer-events: none;
+}
+.testimonial-title {
+    font-style: italic;
+}
+.testimonial-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.star-icon {
+    color: gold;
 }
