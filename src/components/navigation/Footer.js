@@ -14,7 +14,7 @@ class Footer extends Component {
                                 <li>support@koreymadden.com</li>
                                 <li>Call Toll-Free</li>
                                 <li>+1 (888) 507-0220</li>
-                                <li>Mon - Fri, 9am - 5pm EST</li>
+                                <li>Mon-Fri 9am-5pm EST</li>
                             </ul>
                         </div>
                         <div className="col l4 offset-l2 s12">

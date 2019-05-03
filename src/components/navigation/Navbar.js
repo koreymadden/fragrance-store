@@ -51,7 +51,7 @@ class Navbar extends Component {
                 <div className="container">
                     <ul className="nav-ul">
                         <li><NavLink exact to="/">Home</NavLink></li>
-                        <li><NavLink to="/store">Store</NavLink></li>
+                        <li><NavLink to="/shop">Shop</NavLink></li>
                         <li><NavLink to="/cart">Cart</NavLink></li>
                         <li className="right" id="login-nav"><NavLink to="/login">Login</NavLink></li>
                         <li className="right hide" id="logout-nav"><button className="button-a">Logout</button></li>

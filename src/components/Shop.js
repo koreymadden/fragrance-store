@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fire from './Fire';
-class Fragrances extends Component{
+class Shop extends Component{
 
     state = {
         items: [],
@@ -123,13 +123,13 @@ class Fragrances extends Component{
                         <div className="col s12 l6">
                             <div className="card">
                                 <div className="card-image center">
-                                    <img className="item-image" src={item.image} alt={item.name} onLoad={() => {updateStock(item)}}/>
+                                    <img draggable="false" className="item-image no-select" src={item.image} alt={item.name} onLoad={() => {updateStock(item)}}/>
                                 </div>
                                 <div className="card-content">
                                     <span className="card-title valign-wrapper">
                                         <span className="item-name">{item.name}</span>
                                         <span className="new badge red darken-2 no-select" data-badge-caption="">New</span>
-                                        <span className="new badge" onClick={() => {updateStock(item)}} data-badge-caption="" id={item.id+"stock"}>In Stock</span>
+                                        <span className="new badge" onClick={() => {updateStock(item)}} data-badge-caption="" id={item.id+"stock"}>In&nbsp;Stock</span>
                                     </span>
                                     <p>
                                         I am a very simple card. I am good at containing small bits of information.
@@ -158,7 +158,7 @@ class Fragrances extends Component{
             <div className="container">
 
                 <div className="row center">
-                    <img className='cart-page-logo responsive-img' src="http://cdn.shopify.com/s/files/1/0195/0248/t/2/assets/logo.png?0" alt="page-logo" />
+                    <img draggable="false" className='cart-page-logo responsive-img no-select' src="http://cdn.shopify.com/s/files/1/0195/0248/t/2/assets/logo.png?0" alt="page-logo" />
                 </div>
                 <div className="fragrances row">
                     {itemList}
@@ -169,4 +169,4 @@ class Fragrances extends Component{
     }
 }
 
-export default Fragrances;
+export default Shop;

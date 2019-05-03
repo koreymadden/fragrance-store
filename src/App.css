@@ -63,9 +63,6 @@ span .badge {
 .width-100 {
     width: 100% !important;
 }
-#login-btn, #logout-btn {
-    margin-bottom: 20px;
-}
 .full-bg {
     height: 400px;
     width: 100%;
@@ -97,4 +94,103 @@ span .badge {
 }
 .star-icon {
     color: gold;
+}
+.testimonial-card {
+    margin: 40px 0;
+}
+#signup-error-message {
+    margin-top: 20px;
+}
+.male-female-divider {
+    height: 3px;
+}
+.feat-icon {
+    font-size: 50px;
+}
+.home-bg-logo {
+    padding: 0 20px;
+}
+h1 {
+    font-size: 32px;
+}
+.fragrance-brands {
+    height: 60px;
+    margin-bottom: 20px;
+}
+#dandg {
+     height: 16px;
+ }
+#dandg-wrapper {
+    height: 16px;
+}
+#ysl {
+    height: 30px;
+}
+#ysl-wrapper {
+    height: 30px;
+}
+#versace {
+    height: 20px;
+}
+#versace-wrapper {
+    height: 20px;
+}
+#dior {
+    height: 25px;
+}
+#dior-wrapper {
+    height: 25px;
+}
+#chanel {
+    height: 17px;
+}
+#chanel-wrapper {
+    height: 17px;
+}
+#givenchy {
+    height: 17px;
+}
+#givenchy-wrapper {
+    height: 17px;
+}
+.margin-center {
+    margin: 0 auto;
+}
+.add-margin-top {
+    margin-top: 30px;
+}
+.no-min-height {
+    min-height: 0 !important;
+}
+.google-img {
+    height: 20px;
+    display: inline-block;
+    float: left;
+    line-height: 36px;
+}
+.social-btn {
+    height: 36px;
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 2px;
+    padding: 0 16px;
+    justify-content: center;
+    text-transform: capitalize;
+}
+.g-span {
+    display: inline-block;
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+.twitter-img {
+    height: 20px;
+    display: inline-block;
+    float: left;
+    line-height: 36px;
+}
+.t-span {
+    display: inline-block;
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
 }
