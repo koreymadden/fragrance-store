@@ -178,6 +178,12 @@ h1 {
     justify-content: center;
     text-transform: capitalize;
 }
+.btn-effect:hover {
+    background-image: linear-gradient(rgba(0,0,0,0.01), rgba(0,0,0,0.05));
+}
+.btn-effect:active {
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+}
 .g-span {
     display: inline-block;
     margin-left: 10px;
@@ -193,4 +199,26 @@ h1 {
     display: inline-block;
     margin-left: 10px;
     font-family: 'Roboto', sans-serif;
+}
+#login-btn:active {
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+}
+.category-row {
+    padding: 15px 0;
+}
+.details-row {
+    padding: 15px 0;
+}
+.cart-item-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+.cart-item-id {
+    font-style: italic;
+}
+#calculated-total {
+    font-size: 36px;
+}
+#calc-row {
+    margin-top: 20px;
 }

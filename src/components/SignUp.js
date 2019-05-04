@@ -18,7 +18,7 @@ class SignUp extends Component{
                 console.log("one or more fields does not contain a valid value");
                 document.getElementById('signup-error-message').classList.remove('hide');
             } else {
-                const displayName = txtFirstName + " " + txtLastName;
+                const displayName = txtFirstName;
                 const promise = fire.auth().createUserWithEmailAndPassword(txtEmail, txtPassword);
 
                 promise
@@ -28,6 +28,9 @@ class SignUp extends Component{
                             .then(() => {
                                 console.log("updated profile");
                                 // send email verification after display name is set
+                                let uid = e.user.uid;
+                                fire.database().ref("users").child(uid).child("firstName").set(txtFirstName);
+                                fire.database().ref("users").child(uid).child("lastName").set(txtLastName);
                                 e.user.sendEmailVerification()
                                     .then(() => {
                                         console.log("email verification sent")})})

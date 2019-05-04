@@ -93,7 +93,7 @@ class Login extends Component{
                         </div>
                         <div className="row">
                             <div className="col s12 center">
-                                <div data-provider="google" className="social-btn z-depth-2 valign-wrapper" onClick={socialSignin}>
+                                <div data-provider="google" className="btn-effect social-btn z-depth-2 valign-wrapper" onClick={socialSignin}>
                                     <img data-provider="google" className="google-img" src={GoogleLogo} alt="Google Logo"/>
                                     <span data-provider="google" className="g-span">Sign in with Google</span>
                                 </div>
@@ -101,7 +101,7 @@ class Login extends Component{
                         </div>
                         <div className="row">
                             <div className="col s12 center">
-                                <div data-provider="twitter" className="social-btn z-depth-2 valign-wrapper" onClick={socialSignin}>
+                                <div data-provider="twitter" className="btn-effect social-btn z-depth-2 valign-wrapper" onClick={socialSignin}>
                                     <img data-provider="twitter" className="twitter-img" src={TwitterLogo} alt="Twitter Logo"/>
                                     <span data-provider="twitter" className="t-span">Sign in with Twitter</span>
                                 </div>

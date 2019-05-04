@@ -261,8 +261,8 @@ class Home extends Component {
                                         </span>
                                     <p>I am a very simple card. I am good at containing small bits of information. I
                                         am convenient because I require little markup to use effectively.</p>
-                                    <span className="testimonial-name center-block">Korey Madden</span>
-                                    <span className="testimonial-title center-block">Business Owner</span>
+                                    <span className="testimonial-name center-block">Robert Sieradzki</span>
+                                    <span className="testimonial-title center-block">Data Analyst</span>
                                 </div>
                             </div>
                         </div>
@@ -284,8 +284,8 @@ class Home extends Component {
                                         </span>
                                     <p>I am a very simple card. I am good at containing small bits of information. I
                                         am convenient because I require little markup to use effectively.</p>
-                                    <span className="testimonial-name center-block">Korey Madden</span>
-                                    <span className="testimonial-title center-block">Business Owner</span>
+                                    <span className="testimonial-name center-block">Alex Newman</span>
+                                    <span className="testimonial-title center-block">Chauffeur</span>
                                 </div>
                             </div>
                         </div>
