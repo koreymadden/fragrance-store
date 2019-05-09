@@ -17,7 +17,7 @@ class Cart extends Component {
                 const totalPathRef = fire.database().ref("cart").child(uid).child("total");
                 let total = 0;
 
-                pathRef.on('child_added', snapshot => {
+                pathRef.once('child_added', snapshot => {
                     let id = snapshot.key;
                     let image = snapshot.val().image;
                     let name = snapshot.val().name;
@@ -25,10 +25,8 @@ class Cart extends Component {
                     let quantity = snapshot.val().quantity;
                     let subtotal = snapshot.val().subtotal;
 
-                    alert('subtotal: ' + snapshot.val().subtotal);
-                    alert('total: ' + total);
-
                     total = total + snapshot.val().subtotal;
+
                     totalPathRef.set(total).then(() => {
                         console.log('TOTAL: ' + total);
                         document.getElementById("calculated-total-num").innerText = total;
@@ -40,7 +38,8 @@ class Cart extends Component {
                     this.setState({
                         cart: stateCopy
                     })
-                })
+                }).then(() => {console.log("ran cart update once")})
+
             } else {
                 console.log('not logged in on cart page')
             }

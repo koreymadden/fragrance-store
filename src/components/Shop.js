@@ -114,7 +114,15 @@ class Shop extends Component{
         const uid = fire.auth().currentUser.uid;
         let pathRef = fire.database().ref("cart").child(uid).child("items").child(item.id);
 
+        pathRef.once('value', snapshot => {
+            let snapSubtotal = snapshot.child("subtotal").val();
+        }).then(e => {alert('removed')});
+
+        //let snapSubtotal = snapshot.child("subtotal").val();
+        //alert(snapSubtotal);
+
         pathRef.remove().then(() => {
+            console.log("item successfully removed")
             console.log("item successfully removed")
         }).catch(e => {
             console.log(e.message)
