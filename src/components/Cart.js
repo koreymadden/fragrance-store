@@ -32,11 +32,10 @@ class Cart extends Component {
                     let quantity = snapshot.val().quantity;
                     let subtotal = snapshot.val().subtotal;
 
-                    console.log('stuff: ' + total, snapshot.val().subtotal);
                     total = total + snapshot.val().subtotal;
 
                     totalPathRef.set(total).then(() => {
-                        console.log('TOTAL: ' + total);
+                        console.log(`TOTAL: ${total}`);
                         document.getElementById("calculated-total-num").innerText = total;
                     });
 
@@ -89,12 +88,12 @@ class Cart extends Component {
 
         let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
 
-        pathRef.once('value', snapshot => {
-            let snapSubtotal = snapshot.child("subtotal").val();
-        }).then(e => {console.warn(`removed item(s) from cart`)});
+        // pathRef.once('value', snapshot => {
+        //     let snapSubtotal = snapshot.child("subtotal").val();
+        // }).then(e => {console.warn(`removed item(s) from cart`)});
 
         pathRef.remove().then(() => {
-            console.log("item successfully removed", this.uid);
+            alert(`item successfully removed from: ${this.uid}`);
             window.location.reload()
         }).catch(e => {
             console.log(e.message)

@@ -32,7 +32,7 @@ class Home extends Component {
     }
 
     render() {
-        const displayName = this.state.displayName + "!";
+        const displayName = `${this.state.displayName}!`;
 
         return (
             <div>

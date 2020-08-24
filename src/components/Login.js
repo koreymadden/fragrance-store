@@ -28,7 +28,7 @@ class Login extends Component{
 
         fire.auth().onAuthStateChanged(fireUser => {
             if(fireUser) {
-                console.log("Login Page: " + fireUser.email);
+                console.log(`Login Page: ${fireUser.email}`);
                 btnLogout.classList.remove('hide');
                 btnLogin.classList.add('hide');
                 window.location = "/";

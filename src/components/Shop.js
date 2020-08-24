@@ -60,18 +60,16 @@ class Shop extends Component{
 
         // sets new quantity of item and sends quantity and price to updateTotals
         function updateItemQuantity(quantity, price) {
-            console.log(`quantity in user's cart: ${quantity}`);
             if (quantity === null || quantity === undefined || quantity === 0) {
                 let setQuantity = 1;
                 pathRef.child("quantity").set(setQuantity).then(() => {
-                    console.log("quantity set in firebase as " + setQuantity)
+                    console.log("quantity set in firebase")
                 });
-                console.warn('price is ' + price);
                 updateTotals(price, setQuantity);
             } else {
                 let setQuantity = quantity + item.amount;
                 pathRef.child("quantity").set(setQuantity).then(() => {
-                    console.log("quantity set in firebase as " + setQuantity)
+                    console.log("quantity set in firebase")
                 });
                 updateTotals(price, setQuantity);
             }
@@ -79,13 +77,11 @@ class Shop extends Component{
 
         // uses new quantity and the current price to set subtotal and quantity in database
         function updateTotals (price, quantity) {
-            console.log(price, quantity);
             let subtotal = Number((price * quantity).toFixed(2));
             pathRef.child("subtotal").set(subtotal)
                 .then(() => {
-                    console.log("the price  " + price);
-                    console.log("the quantity " + quantity);
-                    console.warn("subtotal successfully calculated " + subtotal);
+                    console.log(`new quantity is: ${quantity}`);
+                    console.log(`subtotal successfully calculated as: ${subtotal}`);
                 })
                 .catch((e) => {
                     console.log(e.message)
@@ -126,12 +122,12 @@ class Shop extends Component{
 
         let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
 
-        pathRef.once('value', snapshot => {
-            let snapSubtotal = snapshot.child("subtotal").val();
-        }).then(e => {console.warn(`removed item(s) from cart`)});
+        // pathRef.once('value', snapshot => {
+        //     let snapSubtotal = snapshot.child("subtotal").val();
+        // }).then(e => {console.warn(`removed item(s) from cart`)});
 
-        //let snapSubtotal = snapshot.child("subtotal").val();
-        //alert(snapSubtotal);
+        // let snapSubtotal = snapshot.child("subtotal").val();
+        // alert(snapSubtotal);
 
         pathRef.remove().then(() => {
             console.log("item successfully removed");
@@ -144,12 +140,12 @@ class Shop extends Component{
 
     render() {
         function updateStock (item) {
-            let element = document.getElementById(item.id + 'stock');
+            let element = document.getElementById(`${item.id}stock`);
             let elementID = item.id;
 
             // writes to element depending on their stock amount
             if (item.stock < 10 && item.stock > 0) {
-                document.getElementById(elementID + 'stock').innerHTML = "Low&nbsp;Stock";
+                document.getElementById(`${elementID}stock`).innerHTML = "Low&nbsp;Stock";
                 element.className += ' low-stock';
             } else {
                 element.className += ' good-stock';
@@ -172,7 +168,7 @@ class Shop extends Component{
                                         <span className="new badge red darken-2 no-select" data-badge-caption="">
                                             New
                                         </span>
-                                        <span className="new badge" onClick={() => {updateStock(item)}} data-badge-caption="" id={item.id + "stock"}>
+                                        <span className="new badge" onClick={() => {updateStock(item)}} data-badge-caption="" id={`${item.id}stock`}>
                                             In&nbsp;Stock
                                         </span>
                                     </span>
