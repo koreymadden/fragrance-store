@@ -7,6 +7,8 @@ class Shop extends Component{
         logStatus: false
     };
 
+    uid = undefined;
+
     componentDidMount() {
 
         // get products from firebase and write to state
@@ -29,7 +31,6 @@ class Shop extends Component{
 
         // See if user is logged in or not
         fire.auth().onAuthStateChanged(user => {
-
             if (user) {
                 this.setState({
                     logStatus: true
@@ -39,31 +40,33 @@ class Shop extends Component{
                     logStatus: false
                 })
             }
+            console.log(`user's logStatus: ${this.state.logStatus}`);
         })
 
     }
 
     addToCart = (item) => {
-        let uid;
 
         // get uid if logged in
         if (this.state.logStatus) {
-            uid = fire.auth().currentUser.uid;
+            this.uid = fire.auth().currentUser.uid;
+            console.log('adding to cart when signed in');
         } else {
-            const id = 'notsignedin';
+            this.uid = "notsignedin";
             console.log('adding to cart when not signed in');
-            uid = id;
         }
 
-        let pathRef = fire.database().ref("cart").child(uid).child("items").child(item.id);
+        let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
 
         // sets new quantity of item and sends quantity and price to updateTotals
         function updateItemQuantity(quantity, price) {
+            console.log(`quantity in user's cart: ${quantity}`);
             if (quantity === null || quantity === undefined || quantity === 0) {
                 let setQuantity = 1;
                 pathRef.child("quantity").set(setQuantity).then(() => {
                     console.log("quantity set in firebase as " + setQuantity)
                 });
+                console.warn('price is ' + price);
                 updateTotals(price, setQuantity);
             } else {
                 let setQuantity = quantity + item.amount;
@@ -76,27 +79,18 @@ class Shop extends Component{
 
         // uses new quantity and the current price to set subtotal and quantity in database
         function updateTotals (price, quantity) {
-            let subtotal = price * quantity;
+            console.log(price, quantity);
+            let subtotal = Number((price * quantity).toFixed(2));
             pathRef.child("subtotal").set(subtotal)
                 .then(() => {
-                    console.log("subtotal successfully calculated " + subtotal);
+                    console.log("the price  " + price);
+                    console.log("the quantity " + quantity);
+                    console.warn("subtotal successfully calculated " + subtotal);
                 })
                 .catch((e) => {
                     console.log(e.message)
                 });
         }
-
-        // gets quantity of item depending on if it already exists in user's cart and calls updateItemQuantity
-        pathRef.once("value", snapshot => {
-            let currentQuantity = snapshot.child("quantity").val();
-            let currentPrice = snapshot.child("price").val();
-            updateItemQuantity(currentQuantity, currentPrice);
-        }).then(() => {
-            console.log("quantity check complete")
-        }).catch((e) => {
-            console.log(e.message);
-            alert("Error adding item to cart.")
-        });
 
         // sets or updates the price, name, and image url of item being added
         pathRef.child("price").set(item.price).catch(e => {
@@ -108,24 +102,41 @@ class Shop extends Component{
         pathRef.child("image").set(item.image).catch(e => {
             console.log(e.message)
         });
+
+        // gets quantity of item depending on if it already exists in user's cart and calls updateItemQuantity
+        pathRef.once("value", snapshot => {
+            let currentQuantity = snapshot.child("quantity").val();
+            let currentPrice = snapshot.child("price").val();
+            updateItemQuantity(currentQuantity, currentPrice);
+        }).then(() => {
+            console.log("quantity check complete")
+        }).catch((e) => {
+            console.log(e.message);
+            console.error("Error adding item to cart.")
+        });
     };
 
     removeFromCart = (item) => {
-        const uid = fire.auth().currentUser.uid;
-        let pathRef = fire.database().ref("cart").child(uid).child("items").child(item.id);
+        // get uid if logged in
+        if (this.state.logStatus) {
+            this.uid = fire.auth().currentUser.uid;
+        } else {
+            this.uid = "notsignedin";
+        }
+
+        let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
 
         pathRef.once('value', snapshot => {
             let snapSubtotal = snapshot.child("subtotal").val();
-        }).then(e => {alert('removed')});
+        }).then(e => {console.warn(`removed item(s) from cart`)});
 
         //let snapSubtotal = snapshot.child("subtotal").val();
         //alert(snapSubtotal);
 
         pathRef.remove().then(() => {
-            console.log("item successfully removed")
-            console.log("item successfully removed")
+            console.log("item successfully removed");
         }).catch(e => {
-            console.log(e.message)
+            console.log(e.message);
         });
     };
 
