@@ -31,13 +31,8 @@ class Cart extends Component {
                     let price = snapshot.val().price;
                     let quantity = snapshot.val().quantity;
                     let subtotal = snapshot.val().subtotal;
-
-                    total = total + snapshot.val().subtotal;
-
-                    totalPathRef.set(total).then(() => {
-                        console.log(`TOTAL: ${total}`);
-                        document.getElementById("calculated-total-num").innerText = total;
-                    });
+                    
+                    total = total + subtotal;
 
                     let stateCopy = this.state.cart;
                     let item = {
@@ -53,9 +48,15 @@ class Cart extends Component {
                         cart: stateCopy
                     })
                 } else {
-                    console.warn('Why is this running on the shop page?')
+                    console.warn('Why is this running on the shop page?', snapshot.val());
+                    return
                 }
 
+            });
+
+            totalPathRef.set(total).then(() => {
+                console.log(`TOTAL: ${total}`);
+                document.getElementById("calculated-total-num").innerText = total;
             });
 
             // See if user is logged in or not
