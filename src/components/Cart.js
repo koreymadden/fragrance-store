@@ -10,20 +10,28 @@ class Cart extends Component {
     };
 
     componentDidMount() {
+        // determine if the user is logged in or not
         fire.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log('logged in on cart page');
                 this.uid = user.uid;
+                this.setState({
+                    logStatus: true
+                })
             } else {
                 console.log('not logged in on cart page');
                 this.uid = 'notsignedin';
+                this.setState({
+                    logStatus: false
+                })
             }
 
-            const pathRef = fire.database().ref("cart").child(this.uid).child("items");
-            const totalPathRef = fire.database().ref("cart").child(this.uid).child("total");
+            this.cartItemsPath = fire.database().ref("cart").child(this.uid).child("items");
+            this.cartTotalPath = fire.database().ref("cart").child(this.uid).child("total");
             let total = 0;
 
-            pathRef.on('child_added', snapshot => {
+            // set initial state of the cart
+            this.cartItemsPath.on('child_added', snapshot => {
                 if (window.location.pathname === "/cart") {
                     let id = snapshot.key;
                     let image = snapshot.val().image;
@@ -54,31 +62,14 @@ class Cart extends Component {
 
             });
 
-            totalPathRef.set(total).then(() => {
-                console.log(`TOTAL: ${total}`);
-                document.getElementById("calculated-total-num").innerText = total;
+            this.cartTotalPath.set(total).then(() => {
+                this.updateDocVals("calculated-total-num", "innerText", total);
             });
-
-            // See if user is logged in or not
-            fire.auth().onAuthStateChanged(user => {
-                if (user) {
-                    this.setState({
-                        logStatus: true
-                    })
-                } else {
-                    this.setState({
-                        logStatus: false
-                    })
-                }
-                console.log(`user's logStatus: ${this.state.logStatus}`);
-            })
-
-
         });
     }
 
     removeFromCart = (item) => {
-        // get uid if logged in
+        // removes items from current cart
         if (this.state.logStatus) {
             this.uid = fire.auth().currentUser.uid;
         } else {
@@ -87,19 +78,51 @@ class Cart extends Component {
             this.uid = id;
         }
 
-        let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
+        this.cartItemsPath.child(item.id).remove().then(() => {
+            this.getCurrentCart();
+            let total = 0;
 
-        // pathRef.once('value', snapshot => {
-        //     let snapSubtotal = snapshot.child("subtotal").val();
-        // }).then(e => {console.warn(`removed item(s) from cart`)});
+            this.state.cart.forEach(item => {
+                total = total + item.subtotal;
+            });
 
-        pathRef.remove().then(() => {
-            alert(`item successfully removed from: ${this.uid}`);
-            window.location.reload()
+            this.cartTotalPath.set(total).then(() => {
+                this.updateDocVals("calculated-total-num", "innerText", total);
+            });
         }).catch(e => {
             console.log(e.message)
         });
     };
+    
+    updateDocVals = (id, prop, val) => {
+        // easy way to update the DOM
+        switch (id) {
+            case "_example":
+                // do something
+                break;
+            default:
+                document.getElementById(id)[prop] = val;
+                console.log(`document.getElementById(${id}).${prop} = ${val}`);
+        }
+    }
+
+    getCurrentCart = () => {
+        // updates the state from firebase to reflect the current cart
+        console.log("getting current cart...");
+        
+        this.cartItemsPath.once('value', snapshot => {            
+            let databaseItems = snapshot.val();
+            let cart = [];
+            
+            for (let key in databaseItems) {
+                cart.push(databaseItems[key]);
+            }
+
+            this.setState({
+                cart
+            })
+        });
+    }
 
     render() {
         const cartList = this.state.cart.map(cartItem => {
