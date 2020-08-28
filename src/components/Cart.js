@@ -93,6 +93,11 @@ class Cart extends Component {
             console.log(e.message)
         });
     };
+
+    handleQuantityChange = (e, item) => {
+        console.log(e.target.value);
+        console.log(item);
+    }
     
     updateDocVals = (id, prop, val) => {
         // easy way to update the DOM
@@ -145,7 +150,7 @@ class Cart extends Component {
                         </div>
                         <div className="col s2">
                             <p>
-                                {cartItem.quantity}
+                                <input type="number" placeholder={cartItem.quantity} onChange={(e) => {this.handleQuantityChange(e, cartItem)}}></input>
                             </p>
                         </div>
                         <div className="col s2">
