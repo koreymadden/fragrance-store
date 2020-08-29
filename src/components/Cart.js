@@ -104,8 +104,6 @@ class Cart extends Component {
         const subtotal = Number((item.price * item.quantity).toFixed(2));
         this.cartItemsPath.child(item.id).child("subtotal").set(subtotal)
             .then(() => {
-                console.log(`new quantity is: ${item.quantity}`);
-                console.log(`subtotal successfully calculated as: ${subtotal}`);
                 this.getCurrentCart();
             })
             .catch((e) => {
@@ -129,7 +127,6 @@ class Cart extends Component {
 
     getCurrentCart = () => {
         // updates the state and calculates total from firebase to reflect the current cart
-        console.log("getting current cart...");
         this.cartItemsPath.once('value', snapshot => {            
             let databaseItems = snapshot.val();
             let cart = [];

@@ -122,13 +122,6 @@ class Shop extends Component{
 
         let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
 
-        // pathRef.once('value', snapshot => {
-        //     let snapSubtotal = snapshot.child("subtotal").val();
-        // }).then(e => {console.warn(`removed item(s) from cart`)});
-
-        // let snapSubtotal = snapshot.child("subtotal").val();
-        // alert(snapSubtotal);
-
         pathRef.remove().then(() => {
             console.log("item successfully removed");
         }).catch(e => {
