@@ -39,8 +39,7 @@ class Cart extends Component {
                     let price = snapshot.val().price;
                     let quantity = snapshot.val().quantity;
                     let subtotal = snapshot.val().subtotal;
-                    
-                    total = total + subtotal;
+                    total = Number((total + subtotal).toFixed(2));
 
                     let stateCopy = this.state.cart;
                     let item = {
@@ -54,7 +53,7 @@ class Cart extends Component {
                     stateCopy.push(item);
                     this.setState({
                         cart: stateCopy
-                    })
+                    });
                 } else {
                     console.warn('Why is this running on the shop page?', snapshot.val());
                     return
@@ -80,30 +79,48 @@ class Cart extends Component {
 
         this.cartItemsPath.child(item.id).remove().then(() => {
             this.getCurrentCart();
-            let total = 0;
-
-            this.state.cart.forEach(item => {
-                total = total + item.subtotal;
-            });
-
-            this.cartTotalPath.set(total).then(() => {
-                this.updateDocVals("calculated-total-num", "innerText", total);
-            });
         }).catch(e => {
             console.log(e.message)
         });
     };
 
     handleQuantityChange = (e, item) => {
-        console.log(e.target.value);
-        console.log(item);
+        // remove targeted item from the state's cart and push a new one to it
+        item.quantity = e.target.value;
+        let cart = this.state.cart.filter(obj => {
+            return obj.id !== item.id;
+        });
+        cart.push(item);
+
+        let id = item.id;
+        let quantity = item.quantity;
+        this.cartItemsPath.child(id).child("quantity").set(quantity).then(() => {
+            this.calculateSubtotal(item);
+        });
+
     }
     
+    calculateSubtotal(item) {
+        // calculate the subtotal of an item and set it in firebase, then update the current cart state
+        const subtotal = Number((item.price * item.quantity).toFixed(2));
+        this.cartItemsPath.child(item.id).child("subtotal").set(subtotal)
+            .then(() => {
+                console.log(`new quantity is: ${item.quantity}`);
+                console.log(`subtotal successfully calculated as: ${subtotal}`);
+                this.getCurrentCart();
+            })
+            .catch((e) => {
+                console.log(e.message)
+            });
+    }
+
     updateDocVals = (id, prop, val) => {
         // easy way to update the DOM
         switch (id) {
-            case "_example":
-                // do something
+            case "calculated-total-num":
+                // add comma to the calculated total
+                val = val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                document.getElementById(id)[prop] = val;
                 break;
             default:
                 document.getElementById(id)[prop] = val;
@@ -112,20 +129,25 @@ class Cart extends Component {
     }
 
     getCurrentCart = () => {
-        // updates the state from firebase to reflect the current cart
+        // updates the state and calculates total from firebase to reflect the current cart
         console.log("getting current cart...");
-        
         this.cartItemsPath.once('value', snapshot => {            
             let databaseItems = snapshot.val();
             let cart = [];
-            
             for (let key in databaseItems) {
+                databaseItems[key].id = key;
                 cart.push(databaseItems[key]);
             }
-
             this.setState({
                 cart
-            })
+            });
+            let total = 0;
+            this.state.cart.forEach(item => {
+                total = Number((total + item.subtotal).toFixed(2));
+            });
+            this.cartTotalPath.set(total).then(() => {
+                this.updateDocVals("calculated-total-num", "innerText", total);
+            });
         });
     }
 
