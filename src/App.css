@@ -215,6 +215,24 @@ h1 {
 .cart-item-id {
     font-style: italic;
 }
+.cart-quantity {
+    display: block !important;
+    margin-block-start: 1em !important;
+    margin-block-end: 1em !important;
+    margin-inline-start: 0px !important;
+    margin-inline-end: 0px !important;
+    line-height: 1.5 !important;
+    height: auto !important;
+    font-size: inherit !important;
+}
+.input-field .cart-quantity:focus {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: none !important;
+}
+.input-field .cart-quantity {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
 #calculated-total {
     font-size: 36px;
 }

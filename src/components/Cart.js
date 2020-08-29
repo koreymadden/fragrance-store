@@ -97,7 +97,6 @@ class Cart extends Component {
         this.cartItemsPath.child(id).child("quantity").set(quantity).then(() => {
             this.calculateSubtotal(item);
         });
-
     }
     
     calculateSubtotal(item) {
@@ -152,9 +151,12 @@ class Cart extends Component {
     }
 
     render() {
+        const handleSubmit = (e) => {
+            e.preventDefault();
+          }
         const cartList = this.state.cart.map(cartItem => {
             return (
-                <div key={cartItem.id}>
+                <form key={cartItem.id} onSubmit={handleSubmit}>
                     <div className="row no-margin details-row">
                         <div className="col s2">
                             <img className="responsive-img" src={cartItem.image} alt={cartItem.name}/>
@@ -170,10 +172,8 @@ class Cart extends Component {
                                 <span id="cart-remove" className="btn transparent z-depth-0 red-text text-darken-2 no-padding" onClick={() => {this.removeFromCart(cartItem)}}>Remove</span>
                             </p>
                         </div>
-                        <div className="col s2">
-                            <p>
-                                <input type="number" placeholder={cartItem.quantity} onChange={(e) => {this.handleQuantityChange(e, cartItem)}}></input>
-                            </p>
+                        <div className="col s2 input-field no-margin">
+                                <input className="cart-quantity" type="number" value={cartItem.quantity} onChange={(e) => {this.handleQuantityChange(e, cartItem)}}></input>
                         </div>
                         <div className="col s2">
                             <p>
@@ -181,13 +181,13 @@ class Cart extends Component {
                             </p>
                         </div>
                         <div className="col s2">
-                            <p>
+                            <p id={`item-subtotal-${cartItem.id}`}>
                                 ${cartItem.subtotal}
                             </p>
                         </div>
                     </div>
                     <div className="divider"/>
-                </div>
+                </form>
             )
         });
 
