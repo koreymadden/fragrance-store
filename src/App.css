@@ -38,6 +38,9 @@
 .good-stock {
     background-color: #1b5e20 !important;
 }
+.no-stock {
+    background-color: #d32f2f !important;
+}
 span .badge {
     min-width: initial !important;
 }

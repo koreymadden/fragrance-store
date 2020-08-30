@@ -68,11 +68,20 @@ class Shop extends Component {
                 });
         }
 
+        // checks to see if there is stock to add to the users cart
+        if (item.stock < 1) {
+            console.error(`${item.name} is out of stock`);
+            return;
+        }
+
         // sets or updates the price, name, and image url of item being added
         itemPath.child("price").set(item.price).catch(e => {
             console.log(e.message)
         });
         itemPath.child("name").set(item.name).catch(e => {
+            console.log(e.message)
+        });
+        itemPath.child("stock").set(item.stock).catch(e => {
             console.log(e.message)
         });
         itemPath.child("image").set(item.image).catch(e => {
@@ -113,6 +122,9 @@ class Shop extends Component {
             if (item.stock < 10 && item.stock > 0) {
                 document.getElementById(`${elementID}stock`).innerHTML = "Low&nbsp;Stock";
                 element.className += ' low-stock';
+            } else if (item.stock < 1) {
+                document.getElementById(`${elementID}stock`).innerHTML = "Sold&nbsp;Out";
+                element.className += ' no-stock';
             } else {
                 element.className += ' good-stock';
             }
@@ -148,11 +160,11 @@ class Shop extends Component {
                                 <p className="price col s12">Price: ${item.price}</p>
                                 <p className="price col s12">Stock: {item.stock}</p>
                             </div>
-                            <div className="card-action">
-                                <button className="btn-flat grey lighten-4 card-btn" onClick={() => {this.addToCart(item)}}>
+                            <div id={`${item.id}-card-action`} className="card-action">
+                                <button className={`btn-flat grey lighten-4 card-btn ${item.stock > 0 ? "" : "disabled no-select"}`} onClick={() => {this.addToCart(item)}}>
                                     Add To Cart
                                 </button>
-                                <button className="btn-flat grey lighten-4 card-btn" onClick={() => {this.removeFromCart(item)}}>
+                                <button className={`btn-flat grey lighten-4 card-btn ${item.stock > 0 ? "" : "disabled no-select"}`} onClick={() => {this.removeFromCart(item)}}>
                                     Remove
                                 </button>
                             </div>
