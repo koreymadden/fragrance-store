@@ -34,11 +34,7 @@ class Cart extends Component {
             this.cartItemsPath.on('child_added', snapshot => {
                 if (window.location.pathname === "/cart") {
                     let id = snapshot.key;
-                    let image = snapshot.val().image;
-                    let name = snapshot.val().name;
-                    let price = snapshot.val().price;
-                    let quantity = snapshot.val().quantity;
-                    let subtotal = snapshot.val().subtotal;
+                    let {image, name, price, quantity, subtotal} = snapshot.val();
                     total = Number((total + subtotal).toFixed(2));
 
                     let cart = this.state.cart;
