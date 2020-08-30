@@ -13,17 +13,17 @@ class Cart extends Component {
         // determine if the user is logged in or not
         fire.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log('logged in on cart page');
                 this.uid = user.uid;
                 this.setState({
                     logStatus: true
-                })
+                });
+                console.log('logged in on cart page', this.uid);
             } else {
-                console.log('not logged in on cart page');
                 this.uid = 'notsignedin';
                 this.setState({
                     logStatus: false
-                })
+                });
+                console.log('not logged in on cart page', this.uid);
             }
 
             this.cartItemsPath = fire.database().ref("cart").child(this.uid).child("items");
@@ -41,7 +41,7 @@ class Cart extends Component {
                     let subtotal = snapshot.val().subtotal;
                     total = Number((total + subtotal).toFixed(2));
 
-                    let stateCopy = this.state.cart;
+                    let cart = this.state.cart;
                     let item = {
                         id,
                         image,
@@ -50,9 +50,9 @@ class Cart extends Component {
                         quantity,
                         subtotal
                     };
-                    stateCopy.push(item);
+                    cart.push(item);
                     this.setState({
-                        cart: stateCopy
+                        cart
                     });
                 } else {
                     console.warn('Why is this running on the shop page?', snapshot.val());

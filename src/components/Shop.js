@@ -1,15 +1,31 @@
 import React, { Component } from 'react';
 import fire from './Fire';
-class Shop extends Component{
+class Shop extends Component {
 
     state = {
         items: [],
         logStatus: false
     };
-
-    uid = undefined;
-
+    
     componentDidMount() {
+        // see if user is logged in or not
+        fire.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.uid = user.uid;
+                this.setState({
+                    logStatus: true
+                });
+                console.log('logged in on cart page', this.uid);
+            } else {
+                this.uid = 'notsignedin';
+                this.setState({
+                    logStatus: false
+                });
+                console.log('not logged in on cart page', this.uid);
+            }
+            this.cartItemsPath = fire.database().ref("cart").child(this.uid).child("items");
+            this.cartTotalPath = fire.database().ref("cart").child(this.uid).child("total");
+        });
 
         // get products from firebase and write to state
         fire.database().ref("products").on("child_added", snapshot => {
@@ -18,69 +34,33 @@ class Shop extends Component{
             let id = snapshot.child("id").val();
             let stock = snapshot.child("stock").val();
             let image = snapshot.child("image").val();
-
-            let item = {'name': name, 'price': price, 'id': id, 'stock': stock, 'image': image, 'amount': 1};
-
-            let itemsCopy = this.state.items;
-            itemsCopy.push(item);
-
+            let amount = 1;
+            
+            let items = this.state.items;
+            let item = {
+                name,
+                price,
+                id,
+                stock,
+                image,
+                amount
+            };
+            items.push(item);
             this.setState({
-                items: itemsCopy
+                items
             });
         });
-
-        // See if user is logged in or not
-        fire.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.setState({
-                    logStatus: true
-                })
-            } else {
-                this.setState({
-                    logStatus: false
-                })
-            }
-            console.log(`user's logStatus: ${this.state.logStatus}`);
-        })
 
     }
 
     addToCart = (item) => {
-
-        // get uid if logged in
-        if (this.state.logStatus) {
-            this.uid = fire.auth().currentUser.uid;
-            console.log('adding to cart when signed in');
-        } else {
-            this.uid = "notsignedin";
-            console.log('adding to cart when not signed in');
-        }
-
-        let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
-
-        // sets new quantity of item and sends quantity and price to updateTotals
-        function updateItemQuantity(quantity, price) {
-            if (quantity === null || quantity === undefined || quantity === 0) {
-                let setQuantity = 1;
-                pathRef.child("quantity").set(setQuantity).then(() => {
-                    console.log("quantity set in firebase")
-                });
-                updateTotals(price, setQuantity);
-            } else {
-                let setQuantity = quantity + item.amount;
-                pathRef.child("quantity").set(setQuantity).then(() => {
-                    console.log("quantity set in firebase")
-                });
-                updateTotals(price, setQuantity);
-            }
-        }
+        let itemPath = this.cartItemsPath.child(item.id);
 
         // uses new quantity and the current price to set subtotal and quantity in database
-        function updateTotals (price, quantity) {
+        function updateTotals(price, quantity) {
             let subtotal = Number((price * quantity).toFixed(2));
-            pathRef.child("subtotal").set(subtotal)
+            itemPath.child("subtotal").set(subtotal)
                 .then(() => {
-                    console.log(`new quantity is: ${quantity}`);
                     console.log(`subtotal successfully calculated as: ${subtotal}`);
                 })
                 .catch((e) => {
@@ -89,50 +69,43 @@ class Shop extends Component{
         }
 
         // sets or updates the price, name, and image url of item being added
-        pathRef.child("price").set(item.price).catch(e => {
+        itemPath.child("price").set(item.price).catch(e => {
             console.log(e.message)
         });
-        pathRef.child("name").set(item.name).catch(e => {
+        itemPath.child("name").set(item.name).catch(e => {
             console.log(e.message)
         });
-        pathRef.child("image").set(item.image).catch(e => {
+        itemPath.child("image").set(item.image).catch(e => {
             console.log(e.message)
         });
 
-        // gets quantity of item depending on if it already exists in user's cart and calls updateItemQuantity
-        pathRef.once("value", snapshot => {
+        // gets quantity of item depending on if it already exists in user's cart and sets new quantity of item and sends quantity and price to updateTotals
+        itemPath.once("value", snapshot => {
             let currentQuantity = snapshot.child("quantity").val();
             let currentPrice = snapshot.child("price").val();
-            updateItemQuantity(currentQuantity, currentPrice);
+            let setQuantity = currentQuantity ? currentQuantity + item.amount : item.amount;
+            this.cartItemsPath.child(item.id).child("quantity").set(setQuantity).then(() => {
+                updateTotals(currentPrice, setQuantity);
+            });
         }).then(() => {
-            console.log("quantity check complete")
+            console.log("quantity successfully updated")
         }).catch((e) => {
             console.log(e.message);
-            console.error("Error adding item to cart.")
         });
     };
 
     removeFromCart = (item) => {
-        // get uid if logged in
-        if (this.state.logStatus) {
-            this.uid = fire.auth().currentUser.uid;
-        } else {
-            this.uid = "notsignedin";
-        }
-
-        let pathRef = fire.database().ref("cart").child(this.uid).child("items").child(item.id);
-
-        pathRef.remove().then(() => {
-            console.log("item successfully removed");
+        // remove an item from user's cart
+        let itemPath = this.cartItemsPath.child(item.id);
+        itemPath.remove().then(() => {
+            console.log(`${item.name} was successfully removed`);
         }).catch(e => {
             console.log(e.message);
         });
     };
 
-
-
     render() {
-        function updateStock (item) {
+        function updateStock(item) {
             let element = document.getElementById(`${item.id}stock`);
             let elementID = item.id;
 
