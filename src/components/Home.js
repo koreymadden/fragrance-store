@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import fire from './Fire';
 import Logo from '../assets/mcmc.png';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
 
@@ -109,7 +109,7 @@ class Home extends Component {
                     <div className="col s4 l2 center hide-on-med-and-down center no-select" id="dandg-wrapper">
                         <img id="dandg" className="all-brand-logos margin-center hide-on-med-and-down" draggable="false"
                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dolce_and_Gabbana.svg/1280px-Dolce_and_Gabbana.svg.png"
-                             alt="Dolce & Gabbana"/>
+                             alt="Dolce &amp; Gabbana"/>
                     </div>
                     <div className="col s4 l2 center hide-on-med-and-down no-select" id="chanel-wrapper">
                         <img id="chanel" className="all-brand-logos margin-center hide-on-med-and-down" draggable="false"
