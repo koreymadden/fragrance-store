@@ -117,6 +117,11 @@ span .badge {
 h1 {
     font-size: 32px;
 }
+h2 {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+}
 .fragrance-brands {
     height: 60px;
     margin-bottom: 20px;
@@ -228,8 +233,22 @@ h1 {
     height: auto !important;
     font-size: inherit !important;
 }
+.block {
+    display: block;
+}
+.dashboard-link, .dashboard-link:visited {
+    color: #d32f2f;
+}
+.dashboard-link:active {
+    color: #000000;
+}
+.icon-text {
+    display: inline-block;
+    line-height: 1.1;
+    vertical-align: middle;
+}
 .input-field .cart-quantity:focus {
-    border-bottom: 1px solid #000 !important;
+    border-bottom: 1px solid #000000 !important;
     box-shadow: none !important;
 }
 .input-field .cart-quantity {

@@ -22,7 +22,7 @@ class Footer extends Component {
                             <ul>
                                 <li><Link to="/" className="grey-text text-lighten-3" href="#">My Account</Link></li>
                                 <li><Link to="/" className="grey-text text-lighten-3" href="#">Contact Us</Link></li>
-                                <li><Link to="/" className="grey-text text-lighten-3" href="#">Shipping & Returns</Link></li>
+                                <li><Link to="/" className="grey-text text-lighten-3" href="#">Shipping &nbsp; Returns</Link></li>
                                 <li><Link to="/" className="grey-text text-lighten-3" href="#">FAQ</Link></li>
                             </ul>
                         </div>
@@ -30,8 +30,8 @@ class Footer extends Component {
                 </div>
                 <div className="footer-copyright">
                     <div className="container">
-                        © 2019 Copyright Korey Fragrance Project
-                        <Link to="/" className="grey-text text-lighten-4 right more-link" href="#">Terms & Conditions</Link>
+                        © 2020 Copyright Korey Fragrance Project
+                        <Link to="/" className="grey-text text-lighten-4 right more-link" href="#">Terms &nbsp; Conditions</Link>
                         <Link to="/" className="grey-text text-lighten-4 right more-link" href="#">Privacy Policy</Link>
                     </div>
                 </div>

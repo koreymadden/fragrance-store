@@ -10,6 +10,7 @@ class Navbar extends Component {
     };
 
     componentDidMount() {
+        const dashboardBtn = document.getElementById("dashboard-nav");
         const logoutBtn = document.getElementById("logout-nav");
         const loginBtn = document.getElementById("login-nav");
 
@@ -17,6 +18,12 @@ class Navbar extends Component {
             let stateCopy = this.state;
 
             if (user) {
+                if (user.uid === "zXDFWiVo4OYeLZHguHCwdG6M5KV2") {
+                    console.warn("administrator");
+                    dashboardBtn.classList.remove("hide");
+                } else {
+                    console.warn("not administrator");
+                }
                 logoutBtn.classList.remove("hide");
                 loginBtn.classList.add("hide");
                 let userEmail = fire.auth().currentUser.email;
@@ -53,6 +60,7 @@ class Navbar extends Component {
                         <li><NavLink exact to="/">Home</NavLink></li>
                         <li><NavLink to="/shop">Shop</NavLink></li>
                         <li><NavLink to="/cart">Cart</NavLink></li>
+                        <li className="hide" id="dashboard-nav"><NavLink to="/dashboard">Dashboard</NavLink></li>
                         <li className="right" id="login-nav"><NavLink to="/login">Login</NavLink></li>
                         <li className="right hide" id="logout-nav"><button className="button-a">Logout</button></li>
                     </ul>
