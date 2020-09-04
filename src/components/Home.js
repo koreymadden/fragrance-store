@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fire from './Fire';
-import Logo from '../assets/mcmc.png';
+import Logo from '../assets/logos/mcmc.png';
 import { Link } from "react-router-dom";
 
 class Home extends Component {

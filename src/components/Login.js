@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import fire from './Fire';
 import { Link } from 'react-router-dom';
-import Logo from '../assets/mcmc.png';
+import Logo from '../assets/logos/mcmc.png';
 import firebase from "firebase/app";
-import GoogleLogo from '../assets/g-logo.png';
-import TwitterLogo from '../assets/t-logo.png';
+import GoogleLogo from '../assets/logos/g-logo.png';
+import TwitterLogo from '../assets/logos/t-logo.png';
 
 class Login extends Component{
 
