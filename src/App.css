@@ -13,6 +13,21 @@
 .active {
     color: #d32f2f ;
 }
+.theme-bg-1 {
+    background-color: #d32f2f ;
+}
+.theme-bg-2 {
+    background-color: #000000 ;
+}
+form .btn:hover {
+    background-color: #d32f2f !important;
+}
+.form-btn {
+    margin-bottom: 14px;
+}
+.card-image {
+    overflow: hidden;
+}
 .item-image {
     max-height: 300px;
     width: inherit !important;
@@ -235,6 +250,13 @@ h2 {
 }
 .block {
     display: block;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+.center {
+    text-align: center;
 }
 .dashboard-link, .dashboard-link:visited {
     color: #d32f2f;
