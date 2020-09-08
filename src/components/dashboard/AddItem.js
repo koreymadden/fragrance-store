@@ -54,7 +54,7 @@ class AddItem extends Component {
                     <label className="active" htmlFor="newItemStock">Available Stock</label>
                     <input placeholder="300" id="newItemStock" type="text" className="validate" />
                     <div className="file-field input-field">
-                        <div className="btn theme-bg-2">
+                        <div className="btn box-btn theme-bg-2">
                             <span>File</span>
                             <input id="newItemImage" type="file" accept="image/*" multiple />
                         </div>
@@ -63,7 +63,7 @@ class AddItem extends Component {
                         </div>
                     </div>
                     <div className="flex-center">
-                        <button className="form-btn btn theme-bg-2 waves-effect waves-light" type="submit" name="action">
+                        <button className="form-btn box-btn btn theme-bg-2 waves-effect waves-light" type="submit" name="action">
                             Submit
                         </button>
                     </div>

@@ -19,7 +19,7 @@
 .theme-bg-2 {
     background-color: #000000 ;
 }
-form .btn:hover {
+form .box-btn:hover {
     background-color: #d32f2f !important;
 }
 .form-btn {
