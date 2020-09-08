@@ -11,16 +11,17 @@ class AddItem extends Component {
             
             // get values from DOM
             let name = document.getElementById('newItemName').value;
-            let price = document.getElementById('newItemPrice').value;
-            let stock = document.getElementById('newItemStock').value;
+            let price = parseInt(document.getElementById('newItemPrice').value);
+            let stock = parseInt(document.getElementById('newItemStock').value);
             let imageData = document.getElementById('newItemImage').files[0];
-            let id = 404;
-
-            if (name === "" || price === "" || stock === "" || imageData === undefined) return;
+            let id = Date.now();
+            
+            if (name === "" || isNaN(price) || isNaN(stock) || imageData === undefined) return;
 
             // upload user image to firebase storage using the name value as file name
-            let imageRef = fire.storage().ref().child('images').child(name);
-            await imageRef.put(imageData)
+            const DATE_NOW = Date.now().toString();
+            let imagePath = fire.storage().ref().child('images').child(DATE_NOW);
+            await imagePath.put(imageData)
             .then(
                 console.log("image upload successful")
             ).catch(e => {
@@ -28,8 +29,8 @@ class AddItem extends Component {
             });
 
             // add item object to the products section in firebase
-            imageRef.getDownloadURL().then(url => {
-                fire.database().ref("products").push({id, name, price, stock, image: url})
+            imagePath.getDownloadURL().then(image => {
+                fire.database().ref("products").push({id, name, price, stock, image})
                 .then(
                     console.log(`${name} has been added to the store's products list.`)
                 ).catch((e) => {
@@ -58,7 +59,7 @@ class AddItem extends Component {
                             <input id="newItemImage" type="file" accept="image/*" multiple />
                         </div>
                         <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text" placeholder="Upload one or more files" />
+                            <input className="file-path validate" type="text" placeholder="Upload primary image for item." />
                         </div>
                     </div>
                     <div className="flex-center">

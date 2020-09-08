@@ -4,12 +4,13 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.10.1",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.1",
     "materialize-css": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0"
+    "react-scripts": "^3.4.3",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
