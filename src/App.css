@@ -283,3 +283,27 @@ h2 {
 #calc-row {
     margin-top: 20px;
 }
+.edit-icon {
+    position: absolute;
+    height: 150px;
+    right: 0;
+    top: 0;
+    rotate: 15px;
+    transform: rotate(20deg);
+}
+.edit-item {
+    overflow: hidden;
+    cursor: pointer;
+}
+.edit-item:hover, .edit-item:active{
+    color: #d32f2f;
+}
+.edit-name {
+    font-weight: bold;
+}
+.edit-id {
+    font-style: italic;
+}
+.edit-content {
+    width: 70%;
+}

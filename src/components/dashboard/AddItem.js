@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fire from '../Fire';
-import { Link } from 'react-router-dom';
 
 class AddItem extends Component {
     state = {  }
