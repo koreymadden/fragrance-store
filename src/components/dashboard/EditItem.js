@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import fire from '../Fire';
+import { Link } from 'react-router-dom';
 
 function EditItem () {
     const [items, setItems] = useState([]);
     
     useEffect(() => {
-        console.log("firebase called");
         let newItems = [];
         fire.database().ref("products").on("child_added", snapshot => {
             let name = snapshot.child("name").val();
@@ -16,24 +16,22 @@ function EditItem () {
             const obj = {name, price, id, stock, image};
             newItems.push(obj);
         });
-        console.log('setting state with all of the current items')
         setItems(newItems);
     }, [],);
 
-    console.log('items', items);
     const itemList = items.map(item => {
-        console.log(item.name);
         return (
             <div key={item.id} className="card edit-item">
-                <div className="card-content">
-                    <div className="edit-name edit-content">{item.name}</div>
-                    <div className="edit-id edit-content">{item.id}</div>
-                </div>
-                <img className="edit-icon" src={item.image} alt=""/>
+                <Link to={`/edit/${item.id}`}>
+                    <div className="card-content">
+                        <div className="edit-name edit-content">{item.name}</div>
+                        <div className="edit-id edit-content">{item.id}</div>
+                    </div>
+                    <img className="edit-icon" src={item.image} alt=""/>
+                </Link>
             </div>
         )
     });
-    console.log('itemList end: ', itemList);
     
         
     return (
